@@ -77,7 +77,7 @@ Membatasi DHCP dan DNS Server hanya boleh menerima maksimal 3 koneksi ICMP secar
 ## Jawab
 menjalankan  command 
 
-```
+```sh
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 ```
@@ -91,13 +91,13 @@ Akses dari subnet Blueno dan Cipher hanya diperbolehkan pada pukul 07.00 - 15.00
 ## Jawab
 untuk membatasi blueno dapat menggunakan command berikut
 
-```
+```sh
 iptables -A INPUT -s 10.23.4.0/25 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
 iptables -A INPUT -s 10.23.4.0/25 -j REJECT
 ```
 
 untuk membatasi klien cipher dapat menjalan command berikut
-```
+```sh
 iptables -A INPUT -s 10.23.0.0/22 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
 iptables -A INPUT -s 10.23.0.0/22 -j REJECT
 ```
@@ -126,4 +126,30 @@ echo 'zone "jarkomd04.com" {
         file "/etc/bind/jarkom/jarkomd04.com";
 };'>> /etc/bind/named.conf
 ```
+
+lalu membuat file jarkomd04 pada /etc/bind/jarkom dengan perintah berikut
+
+```sh
+mkdir /etc/bind/jarkom
+
+
+cp /etc/bind/db.local /etc/bind/jarkom/jarkomd04.com
+
+echo '
+
+$TTL    604800
+@       IN      SOA     jarkomd04.com. root.jarkomd04.com. (
+                        2021120705      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      jarkomd04.com.
+@       IN      A       10.23.13.1
+
+
+'>/etc/bind/jarkom/jarkomd04.com
+```
+
 
