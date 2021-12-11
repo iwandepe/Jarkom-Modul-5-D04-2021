@@ -34,32 +34,101 @@ Agar topologi dapat mengakses keluar, konfigurasi Foosha menggunakan iptables, t
 
 ## Jawab
 menjalakan `iptables -t nat -A POSTROUTING -s 10.23.0.0/20 -o eth0 -j SNAT --to-source 192.168.122.7` pada foosha lalu untuk testing dapat dicoba dengan ngeping google pada node lain
+![no1](#)
+
+-t nat: Menggunakan tabel NAT karena akan mengubah alamat asal dari paket
+-A POSTROUTING: Menggunakan chain POSTROUTING karena mengubah asal paket setelah routing
+-s 10.23.0.0/20: Mendifinisikan alamat asal dari paket yaitu semua alamat IP dari subnet 10.23.0.0/20
+-o eth0: Paket keluar dari eth0 Foosha
+-j SNAT: Menggunakan target SNAT untuk mengubah source atau alamat asal dari paket
+-to-source 192.168.122.7: Mendefinisikan IP source, di mana digunakan eth0 Foosha 
+
+kemudian dapat ping pada node lain seperti water7
+![no1.1](#)
+
+
 
 ## Nomor 2
 Mendrop semua akses HTTP dari luar Topologi pada server yang merupakan DHCP Server dan DNS Server demi menjaga keamanan.
 
 ## Jawab
+jalankan command `iptables -A FORWARD -d 10.23.4.128/29 -i eth0 -p tcp --dport 80 -j DROP` pada foosha
+
+Keterangan
+-A FORWARD: Menggunakan chain FORWARD
+-p tcp: Mendefinisikan protokol yang digunakan, yaitu tcp
+--dport 80: Mendefinisikan port yang digunakan, yaitu 80 (HTTP)
+-d 10.23.4.128/29: Mendefinisikan alamat tujuan dari paket (DHCP dan DNS SERVER ) berada pada subnet 10.23.4.128/29
+-i eth0: Paket masuk dari eth0 Foosha
+-j DROP: Paket di-drop
+
+untuk melakukan testing dapat melakukan hal  berikut
+pertama install etcat di server Jipangu dan Doriki: `apt-get install netcat`. Pada Jipangu dan Doriki ketikkan ` nc -l -p 80`
+kemudian pada foosha ketikkan `nmap -p 80 10.23.4.131 `atau `nmap -p 80 10.23.4.130`.
+
+![no2](#)
+
+![no2.1](#)
 
 
 ## Nomor 3
 Membatasi DHCP dan DNS Server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan menggunakan iptables, selebihnya didrop.
 
 ## Jawab
+menjalankan  command 
+`sh
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 
+`
+pada jipangu dan doriki, untuk testing dapat dicoba dengan ping ke arah jipangu atau doriki dari 4 node yang berbeda, maka nanti pada node 4 respon akan berhenti
 
 ## Nomor 4
 Akses dari subnet Blueno dan Cipher hanya diperbolehkan pada pukul 07.00 - 15.00 pada hari Senin sampai Kamis.
 
 ## Jawab
+untuk membatasi blueno dapat menggunakan command berikut
+`sh
+iptables -A INPUT -s 10.23.4.0/25 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
+iptables -A INPUT -s 10.23.4.0/25 -j REJECT
+
+`
+
+untuk membatasi klien cipher dapat menjalan command berikut
+`sh
+iptables -A INPUT -s 10.23.0.0/22 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
+iptables -A INPUT -s 10.23.0.0/22 -j REJECT
+
+`
 
 
 ## Nomor 5
 Akses dari subnet Elena dan Fukuro hanya diperbolehkan pada pukul 15.01 hingga pukul 06.59 setiap harinya.
 
 ## Jawab
+untuk klien elena dapat melakukan command berikut 
+`sh
 
+iptables -A INPUT -s 10.23.10.0/23 -m time --timestart 07:00 --timestop 15:00 -j REJECT
+
+`
+
+dan untuk klien fukuro dapat seperti berikut 
+`sh
+iptables -A INPUT -s 10.23.8.0/24 -m time --timestart 07:00 --timestop 15:00 -j REJECT
+
+`
 
 ## Nomor 6
 Menyetting agar setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada Jorge dan Maingate
 
 ## Jawab
+
+
+`sh
+echo 'zone "jarkomd04.com" {
+        type master;
+        file "/etc/bind/jarkom/jarkomd04.com";
+};'>> /etc/bind/named.conf
+`
+
