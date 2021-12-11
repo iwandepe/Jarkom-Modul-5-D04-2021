@@ -34,7 +34,6 @@ Agar topologi dapat mengakses keluar, konfigurasi Foosha menggunakan iptables, t
 
 ## Jawab
 menjalakan `iptables -t nat -A POSTROUTING -s 10.23.0.0/20 -o eth0 -j SNAT --to-source 192.168.122.7` pada foosha lalu untuk testing dapat dicoba dengan ngeping google pada node lain
-![no1](#)
 
 - t nat: Menggunakan tabel NAT karena akan mengubah alamat asal dari paket
 - A POSTROUTING: Menggunakan chain POSTROUTING karena mengubah asal paket setelah routing
@@ -44,7 +43,7 @@ menjalakan `iptables -t nat -A POSTROUTING -s 10.23.0.0/20 -o eth0 -j SNAT --to-
 - to-source 192.168.122.7: Mendefinisikan IP source, di mana digunakan eth0 Foosha 
 
 kemudian dapat ping pada node lain seperti water7
-![no1.1](#)
+![no1.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no1(1).png?raw=true)
 
 
 
@@ -66,9 +65,9 @@ untuk melakukan testing dapat melakukan hal  berikut
 pertama install etcat di server Jipangu dan Doriki: `apt-get install netcat`. Pada Jipangu dan Doriki ketikkan ` nc -l -p 80`
 kemudian pada foosha ketikkan `nmap -p 80 10.23.4.131 `atau `nmap -p 80 10.23.4.130`.
 
-![no2](#)
+![no2](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no2.1.png?raw=true)
 
-![no2.1](#)
+![no2.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no2.2.png?raw=true)
 
 
 ## Nomor 3
@@ -84,6 +83,25 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j
 
 
 pada jipangu dan doriki, untuk testing dapat dicoba dengan ping ke arah jipangu atau doriki dari 4 node yang berbeda, maka nanti pada node 4 respon akan berhenti
+berikut screenshot jika dicoba untuk ping 4 node
+
+### Blueno(node pertama)
+
+![no3](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no3.png)
+
+### Elena(node kedua)
+
+![no3.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no3.1.png)
+
+### Cipher (node ketiga)
+
+![no3.2](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no3.2.png)
+
+### Fukurou (node keempat)
+
+![no3.3](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no3.3.png)
+
+pada gambar diatas fukurou tidak dapat akses menuju doriki
 
 ## Nomor 4
 Akses dari subnet Blueno dan Cipher hanya diperbolehkan pada pukul 07.00 - 15.00 pada hari Senin sampai Kamis.
@@ -102,6 +120,12 @@ iptables -A INPUT -s 10.23.0.0/22 -m time --timestart 07:00 --timestop 15:00 --w
 iptables -A INPUT -s 10.23.0.0/22 -j REJECT
 ```
 
+berikut adalah contoh hasil jika blueno tidak diberii akses karena melebih waktu batas
+
+![no4.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no4.1.png)
+
+berikut jika diberi akses
+![no4.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no4.2.png)
 
 ## Nomor 5
 Akses dari subnet Elena dan Fukuro hanya diperbolehkan pada pukul 15.01 hingga pukul 06.59 setiap harinya.
@@ -113,6 +137,13 @@ untuk klien elena dapat melakukan command berikut
 
 dan untuk klien fukuro dapat seperti berikut 
 `iptables -A INPUT -s 10.23.8.0/24 -m time --timestart 07:00 --timestop 15:00 -j REJECT`
+
+berikut jika tidak diberi akses
+![no5.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no5.1.png)
+
+berikut jika diberi akses
+![no5.2](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no5.2.png)
+
 
 ## Nomor 6
 Menyetting agar setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada Jorge dan Maingate
