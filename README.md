@@ -76,7 +76,7 @@ Membatasi DHCP dan DNS Server hanya boleh menerima maksimal 3 koneksi ICMP secar
 
 ## Jawab
 menjalankan  command 
-`sh
+`
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 
@@ -88,7 +88,7 @@ Akses dari subnet Blueno dan Cipher hanya diperbolehkan pada pukul 07.00 - 15.00
 
 ## Jawab
 untuk membatasi blueno dapat menggunakan command berikut
-`sh
+`
 iptables -A INPUT -s 10.23.4.0/25 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
 iptables -A INPUT -s 10.23.4.0/25 -j REJECT
 
@@ -98,7 +98,6 @@ untuk membatasi klien cipher dapat menjalan command berikut
 `sh
 iptables -A INPUT -s 10.23.0.0/22 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
 iptables -A INPUT -s 10.23.0.0/22 -j REJECT
-
 `
 
 
@@ -107,7 +106,7 @@ Akses dari subnet Elena dan Fukuro hanya diperbolehkan pada pukul 15.01 hingga p
 
 ## Jawab
 untuk klien elena dapat melakukan command berikut 
-`sh
+`
 
 iptables -A INPUT -s 10.23.10.0/23 -m time --timestart 07:00 --timestop 15:00 -j REJECT
 
@@ -125,7 +124,7 @@ Menyetting agar setiap request dari client yang mengakses DNS Server akan didist
 ## Jawab
 
 
-`sh
+`
 echo 'zone "jarkomd04.com" {
         type master;
         file "/etc/bind/jarkom/jarkomd04.com";
