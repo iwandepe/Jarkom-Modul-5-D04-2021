@@ -77,10 +77,10 @@ Membatasi DHCP dan DNS Server hanya boleh menerima maksimal 3 koneksi ICMP secar
 ## Jawab
 menjalankan  command 
 
-`
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
-`
+`iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP`
+
+
 pada jipangu dan doriki, untuk testing dapat dicoba dengan ping ke arah jipangu atau doriki dari 4 node yang berbeda, maka nanti pada node 4 respon akan berhenti
 
 ## Nomor 4
