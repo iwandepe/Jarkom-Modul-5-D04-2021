@@ -9,7 +9,7 @@
 Agar topologi dapat mengakses keluar, konfigurasi Foosha menggunakan iptables, tetapi tidak menggunakan MASQUERADE.
 
 ## Jawab
-
+menjalakan `iptables -t nat -A POSTROUTING -s 10.23.0.0/20 -o eth0 -j SNAT --to-source 192.168.122.7` pada foosha lalu untuk testing dapat dicoba dengan ngeping google pada node lain
 
 ## Nomor 2
 Mendrop semua akses HTTP dari luar Topologi pada server yang merupakan DHCP Server dan DNS Server demi menjaga keamanan.
