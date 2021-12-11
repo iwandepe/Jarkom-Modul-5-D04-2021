@@ -10,7 +10,24 @@
 
 Topologi dibuat sama seperti soal
 
-![topologi.PNG]()
+![topologi.PNG](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/topologi.PNG)
+
+### B. Lakukan Subnetting dengan CIDR atau VLSM
+untuk kali ini kami menggunakan CIDR
+
+untuk perhitungannya dapat dilihat pada link berikut :
+[CIDR - MODUL 5](https://docs.google.com/spreadsheets/d/10G5YkF7jbdOyspjlx13iXkpxb9JRhdjOuVxj7IeMbXg/edit?usp=sharing)
+
+### C. Lakukan Routing agar semua terhubung
+untuk cara melakukan routing sama seperti pada modul 4
+
+untuk link modul 4 sendiri bisa diakses di:
+
+[MODUL 4 - D04](https://github.com/azhar416/Jarkom-Modul-4-D04-2021)
+
+### D. memberikan ip pada subnet Blueno, Cipher, Fukurou, dan Elena secara dinamis menggunakan bantuan DHCP server. Kemudian kalian ingat bahwa kalian harus setting DHCP Relay pada router yang menghubungkannya.
+
+setiap ip client diubah dari static menjadi dhcp. dan pada setiap router diinstall juga dhcp relay yg mengarah ke dhcp server (JIPANGU).
 
 ## Nomor 1 
 Agar topologi dapat mengakses keluar, konfigurasi Foosha menggunakan iptables, tetapi tidak menggunakan MASQUERADE.
