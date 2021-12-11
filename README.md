@@ -5,6 +5,13 @@
 3. Iwan Dwi Prakoso [05111940000229]
 
 # MODUL 5
+## Konfigurasi
+### A. Membuat Topologi
+
+Topologi dibuat sama seperti soal
+
+![topologi.PNG]()
+
 ## Nomor 1 
 Agar topologi dapat mengakses keluar, konfigurasi Foosha menggunakan iptables, tetapi tidak menggunakan MASQUERADE.
 
