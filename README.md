@@ -76,10 +76,10 @@ Membatasi DHCP dan DNS Server hanya boleh menerima maksimal 3 koneksi ICMP secar
 
 ## Jawab
 menjalankan  command 
+
 `
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
-
 `
 pada jipangu dan doriki, untuk testing dapat dicoba dengan ping ke arah jipangu atau doriki dari 4 node yang berbeda, maka nanti pada node 4 respon akan berhenti
 
@@ -89,15 +89,18 @@ Akses dari subnet Blueno dan Cipher hanya diperbolehkan pada pukul 07.00 - 15.00
 ## Jawab
 untuk membatasi blueno dapat menggunakan command berikut
 `
+
 iptables -A INPUT -s 10.23.4.0/25 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
 iptables -A INPUT -s 10.23.4.0/25 -j REJECT
 
 `
 
 untuk membatasi klien cipher dapat menjalan command berikut
-`sh
+`
+
 iptables -A INPUT -s 10.23.0.0/22 -m time --timestart 07:00 --timestop 15:00 --weekdays Mon,Tue,Wed,Thu -j ACCEPT
 iptables -A INPUT -s 10.23.0.0/22 -j REJECT
+
 `
 
 
