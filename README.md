@@ -36,12 +36,12 @@ Agar topologi dapat mengakses keluar, konfigurasi Foosha menggunakan iptables, t
 menjalakan `iptables -t nat -A POSTROUTING -s 10.23.0.0/20 -o eth0 -j SNAT --to-source 192.168.122.7` pada foosha lalu untuk testing dapat dicoba dengan ngeping google pada node lain
 ![no1](#)
 
--t nat: Menggunakan tabel NAT karena akan mengubah alamat asal dari paket
--A POSTROUTING: Menggunakan chain POSTROUTING karena mengubah asal paket setelah routing
--s 10.23.0.0/20: Mendifinisikan alamat asal dari paket yaitu semua alamat IP dari subnet 10.23.0.0/20
--o eth0: Paket keluar dari eth0 Foosha
--j SNAT: Menggunakan target SNAT untuk mengubah source atau alamat asal dari paket
--to-source 192.168.122.7: Mendefinisikan IP source, di mana digunakan eth0 Foosha 
+- t nat: Menggunakan tabel NAT karena akan mengubah alamat asal dari paket
+- A POSTROUTING: Menggunakan chain POSTROUTING karena mengubah asal paket setelah routing
+- s 10.23.0.0/20: Mendifinisikan alamat asal dari paket yaitu semua alamat IP dari subnet 10.23.0.0/20
+- o eth0: Paket keluar dari eth0 Foosha
+- j SNAT: Menggunakan target SNAT untuk mengubah source atau alamat asal dari paket
+- to-source 192.168.122.7: Mendefinisikan IP source, di mana digunakan eth0 Foosha 
 
 kemudian dapat ping pada node lain seperti water7
 ![no1.1](#)
@@ -55,12 +55,12 @@ Mendrop semua akses HTTP dari luar Topologi pada server yang merupakan DHCP Serv
 jalankan command `iptables -A FORWARD -d 10.23.4.128/29 -i eth0 -p tcp --dport 80 -j DROP` pada foosha
 
 Keterangan
--A FORWARD: Menggunakan chain FORWARD
--p tcp: Mendefinisikan protokol yang digunakan, yaitu tcp
---dport 80: Mendefinisikan port yang digunakan, yaitu 80 (HTTP)
--d 10.23.4.128/29: Mendefinisikan alamat tujuan dari paket (DHCP dan DNS SERVER ) berada pada subnet 10.23.4.128/29
--i eth0: Paket masuk dari eth0 Foosha
--j DROP: Paket di-drop
+- A FORWARD: Menggunakan chain FORWARD
+- p tcp: Mendefinisikan protokol yang digunakan, yaitu tcp
+- --dport 80: Mendefinisikan port yang digunakan, yaitu 80 (HTTP)
+- d 10.23.4.128/29: Mendefinisikan alamat tujuan dari paket (DHCP dan DNS SERVER ) berada pada subnet 10.23.4.128/29
+- i eth0: Paket masuk dari eth0 Foosha
+- j DROP: Paket di-drop
 
 untuk melakukan testing dapat melakukan hal  berikut
 pertama install etcat di server Jipangu dan Doriki: `apt-get install netcat`. Pada Jipangu dan Doriki ketikkan ` nc -l -p 80`
