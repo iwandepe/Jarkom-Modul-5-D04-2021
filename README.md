@@ -121,10 +121,12 @@ iptables -A INPUT -s 10.23.0.0/22 -j REJECT
 ```
 
 berikut adalah contoh hasil jika blueno tidak diberii akses karena melebih waktu batas
+/n
 
 ![no4.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no4.1.png)
 
 berikut jika diberi akses
+/n
 ![no4.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no4.2.png)
 
 ## Nomor 5
@@ -138,10 +140,12 @@ untuk klien elena dapat melakukan command berikut
 dan untuk klien fukuro dapat seperti berikut 
 `iptables -A INPUT -s 10.23.8.0/24 -m time --timestart 07:00 --timestop 15:00 -j REJECT`
 
-berikut jika tidak diberi akses
+berikut jika tidak diberi akses 
+/n
 ![no5.1](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no5.1.png)
 
 berikut jika diberi akses
+/n
 ![no5.2](https://github.com/iwandepe/Jarkom-Modul-5-D04-2021/blob/main/img/no5.2.png)
 
 
